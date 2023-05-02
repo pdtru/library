@@ -12,13 +12,30 @@ body {
   padding: 0;
 }
 
-#header {
-  font-size: 30px;
-}
-
-#header-container {
+.navbar {
+  background-color: #f5f5f5;
   display: flex;
   justify-content: center;
+  padding: 12px;
+}
+
+.header {
+  font-size: 42px;
+}
+
+.modal {
+  position: fixed;
+  z-index: 1;
+  top: 50%;
+  left: 50%;
+  width: 300px;
+  text-align: center;
+  transform: translate(-50%, -50%) scale(0);
+  transition: 0.2s ease-in-out;
+}
+
+.modal.active {
+  transform: translate(-50%, -50%) scale(1);
 }
 
 .button-container {
@@ -28,9 +45,12 @@ body {
 }
 
 .add-book-button {
+  color: white;
+  background-color: #2962ff;
   width: 50px;
   height: 50px;
-  font-size: xx-large;
+  font-size: 20px;
+  font-weight: 100;
   border-radius: 50%;
   border-style: none;
   transition: transform 0.3s ease;
@@ -38,7 +58,7 @@ body {
 
 .add-book-button:hover {
   opacity: 0.75;
-  transform: scale(1.2);
+  transform: scale(1.1);
 }
 
 .footer {
