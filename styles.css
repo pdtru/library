@@ -12,6 +12,35 @@ body {
   padding: 0;
 }
 
+#header {
+  font-size: 30px;
+}
+
+#header-container {
+  display: flex;
+  justify-content: center;
+}
+
+.button-container {
+  position: absolute;
+  right: 50px;
+  bottom: 50px;
+}
+
+.add-book-button {
+  width: 50px;
+  height: 50px;
+  font-size: xx-large;
+  border-radius: 50%;
+  border-style: none;
+  transition: transform 0.3s ease;
+}
+
+.add-book-button:hover {
+  opacity: 0.75;
+  transform: scale(1.2);
+}
+
 .footer {
   width: 100vw;
   position: absolute;
