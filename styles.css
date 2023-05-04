@@ -56,6 +56,19 @@ body {
   margin: 10px;
 }
 
+.add-book-button {
+  border-radius: 8px;
+  border-style: none;
+  margin: 10px;
+  height: 40px;
+  transition: transform 0.3s ease;
+}
+
+.add-book-button:hover {
+  opacity: 0.75;
+  transform: scale(1.02);
+}
+
 .new-book-button {
   position: absolute;
   right: 50px;
