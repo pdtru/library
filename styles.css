@@ -8,6 +8,10 @@
 
 html,
 body {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
   margin: 0;
   padding: 0;
 }
@@ -16,35 +20,46 @@ body {
   background-color: #f5f5f5;
   display: flex;
   justify-content: center;
-  padding: 12px;
+  padding: 16px;
 }
 
 .header {
   font-size: 42px;
 }
 
+.modal-container {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
 .modal {
-  position: fixed;
-  z-index: 1;
-  top: 50%;
-  left: 50%;
-  width: 300px;
-  text-align: center;
-  transform: translate(-50%, -50%) scale(0);
-  transition: 0.2s ease-in-out;
+  background-color: white;
+  border-style: none;
+  border-radius: 8px;
 }
 
-.modal.active {
-  transform: translate(-50%, -50%) scale(1);
+.add-book-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-.button-container {
+.close-modal-button {
+  border-style: none;
+}
+
+.input {
+  border-width: 0.5px;
+  border-radius: 8px;
+  padding: 10px;
+  margin: 10px;
+}
+
+.new-book-button {
   position: absolute;
   right: 50px;
   bottom: 50px;
-}
-
-.add-book-button {
   color: white;
   background-color: #2962ff;
   width: 50px;
@@ -56,16 +71,12 @@ body {
   transition: transform 0.3s ease;
 }
 
-.add-book-button:hover {
+.new-book-button:hover {
   opacity: 0.75;
   transform: scale(1.1);
 }
 
 .footer {
-  width: 100vw;
-  position: absolute;
-  bottom: 0;
-  left: 0;
   display: flex;
   align-items: center;
   justify-content: center;

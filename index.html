@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="styles.css" />
     <link rel="icon" type="image/png" href="images/favicon.png" />
+    <script src="app.js" defer></script>
     <script
       src="https://kit.fontawesome.com/810b7942b8.js"
       crossorigin="anonymous"
@@ -16,38 +17,48 @@
     <nav class="navbar">
       <div class="header">Library</div>
     </nav>
-
-    <div class="modal">
-      <form class="add-book-form">
-        <h3>Add new book</h3>
-      <input
-        class="input"
-        type="text"
-        id="title"
-        placeholder="Title"
-        required
-        maxlength="100"
-      />
-      <input
-        class="input"
-        type="text"
-        id="author"
-        placeholder="Author"
-        required
-        maxlength="100"
-      />
-      <input
-        class="input"
-        type="number"
-        id="pages"
-        placeholder="Pages"
-        required
-        max="10000"
-      />
+    <div class="card-container">
+      <div class="book-card"></div>
     </div>
+    <button data-open-modal class="new-book-button" title="Add new book">
+      +
+    </button>
 
-    <div class="button-container">
-      <button class="add-book-button" title="Add new book">+</button>
+    <div class="modal-container">
+      <dialog data-modal class="modal">
+        <button data-close-modal class="close-modal-button">x</button>
+        <form class="add-book-form">
+          <input
+            class="input"
+            type="text"
+            id="title"
+            placeholder="Title"
+            required
+            maxlength="100"
+          />
+          <input
+            class="input"
+            type="text"
+            id="author"
+            placeholder="Author"
+            required
+            maxlength="100"
+          />
+          <input
+            class="input"
+            type="number"
+            id="pages"
+            placeholder="Pages"
+            required
+            max="10000"
+          />
+          <div>
+            <label>Read</label>
+            <input type="checkbox" />
+          </div>
+          <button class="add-book-button" type="submit">Add</button>
+        </form>
+      </dialog>
     </div>
 
     <footer class="footer">
