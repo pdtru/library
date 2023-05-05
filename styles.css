@@ -17,7 +17,7 @@ body {
 }
 
 /* header */
-.navbar {
+.nav-bar {
   background-color: #f5f5f5;
   display: flex;
   justify-content: center;
@@ -71,7 +71,7 @@ body {
   margin: 5px;
 }
 
-#add-book-button {
+.add-book-button {
   border-radius: 8px;
   border-style: none;
   margin: 10px;
@@ -79,7 +79,7 @@ body {
   transition: transform 0.3s ease;
 }
 
-#add-book-button:hover {
+.add-book-button:hover {
   opacity: 0.75;
   transform: scale(1.02);
 }
