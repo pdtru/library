@@ -6,39 +6,50 @@ class Book {
     this.read = read;
   }
 
-  render() {
-    return `
-    <div id="${title}">
-      <p>${title}</p>
-      <p>${author}</p>
-      <p>${pages}</p>
-      <p>${read}</p>
-    </div>
-    `;
-  }
+  render = () => {
+    const bookContainer = document.createElement('div');
+    bookContainer.id = this.title;
+    const title = document.createElement('p');
+    title.innerText = this.title;
+    const author = document.createElement('p');
+    author.innerText = this.author;
+    const pages = document.createElement('p');
+    pages.innerText = this.pages;
+    const read = document.createElement('input');
+    read.setAttribute('type', 'checkbox');
+    read.value = this.read;
+    bookContainer.append(title, author, pages, read);
+    return bookContainer;
+  };
 }
 
 class Library {
   Books;
+  library;
   constructor() {
     this.Books = new Map();
   }
 
-  addBook = function (book) {
+  addBook = (book) => {
     this.Books.set(book.title, book);
+    this.render();
   };
 
-  removeBook = function (title) {
+  removeBook = (title) => {
     this.Books.delete(title);
+    this.render();
   };
 
-  render = function () {
-    let result = '<div>';
+  createLibrary = () => {
+    this.library = document.createElement('div');
+    return this.library;
+  };
+
+  render = () => {
+    this.library.innerHTML = '';
     this.Books.forEach((value, key) => {
-      result += value.render();
+      this.library.appendChild(value.render());
     });
-    result += '</div>';
-    return result;
   };
 }
 
@@ -50,109 +61,150 @@ class NavBarFactory {
     header.className = 'header';
     header.innerText = 'Library';
     nav.appendChild(header);
-  }
-}
-
-class NewBookButtonFactory {
-  createNewBookButton() {
-    const newBookButton = document.createElement('button');
-    newBookButton.className = 'new-book-button';
-    newBookButton.setAttribute('data-open-modal', true);
-    newBookButton.innerText = '+';
+    return nav;
   }
 }
 
 class FooterFactory {
   createFooter() {
-    return ` <footer class="footer">
-    <p>
-      Copyright ©
-      <script>
-        document.write(new Date().getFullYear());
-      </script>
-      pdtru&nbsp;
-      <a href="https://github.com/pdtru" target="_blank">
-        <i class="fa-brands fa-github"></i>
-      </a>
-    </p>
-  </footer>`;
+    const footerContainer = document.createElement('footer');
+    footerContainer.className = 'footer';
+    const footer = document.createElement('p');
+    footer.innerHTML = 'Copyright © 2023 pdtru ';
+    footerContainer.appendChild(footer);
+    const github = document.createElement('a');
+    github.href = 'https://github.com/pdtru';
+    footer.appendChild(github);
+    const githubIcon = document.createElement('i');
+    githubIcon.className = 'fa-brands fa-github';
+    github.appendChild(githubIcon);
+    return footerContainer;
   }
 }
 
 class ModalFactory {
-  createModal() {
-    const modal = document.createElement('div');
-    modal.className = 'modal-container';
-    const dialog = this.createDialog();
+  modal;
+  titleInput;
+  authorInput;
+  pagesInput;
+  checkBox;
+
+  constructor() {
+    this.modal = null;
+    this.titleInput = null;
+    this.authorInput = null;
+    this.pagesInput = null;
+    this.checkBox = null;
+  }
+
+  createModal = () => {
+    const modalContainer = document.createElement('div');
+    modalContainer.className = 'modal-container';
+    this.modal = this.createDialog();
     const bookForm = this.createBookForm();
     const closeButton = this.createCloseButton();
-    const titleInput = this.createInput('Title', 100);
-    const authorInput = this.createInput('Author', 100);
-    const pagesInput = this.createInput('Pages', 10000);
-    const checkBox = this.createCheckBox();
+    this.titleInput = this.createInput('Title', 100);
+    this.authorInput = this.createInput('Author', 100);
+    this.pagesInput = this.createInput('Pages', 10000);
+    this.checkBox = this.createCheckBox();
     const addButton = this.createAddButton();
-    modal.appendChild(dialog);
-    dialog.appendChild(bookForm);
+    modalContainer.appendChild(this.modal);
+    this.modal.appendChild(bookForm);
     bookForm.append(
       closeButton,
-      titleInput,
-      authorInput,
-      pagesInput,
-      checkBox,
+      this.titleInput,
+      this.authorInput,
+      this.pagesInput,
+      this.checkBox,
       addButton
     );
-    return modal;
-  }
 
-  createAddButton() {
+    this.modal.addEventListener('click', (e) => {
+      const dialogDimensions = this.modal.getBoundingClientRect();
+      if (
+        e.clientX < dialogDimensions.left ||
+        e.clientX > dialogDimensions.right ||
+        e.clientY < dialogDimensions.top ||
+        e.clientY > dialogDimensions.bottom
+      ) {
+        this.modal.close();
+      }
+    });
+    return modalContainer;
+  };
+
+  createNewBookButton = () => {
+    const newBookButton = document.createElement('button');
+    newBookButton.className = 'new-book-button';
+    newBookButton.setAttribute('data-open-modal', true);
+    newBookButton.innerText = '+';
+    newBookButton.addEventListener('click', () => {
+      this.modal.showModal();
+    });
+    return newBookButton;
+  };
+
+  createAddButton = () => {
     const addButton = document.createElement('button');
     addButton.className = 'add-book-button';
-    addButton.addEventListener('click', () => {
-      const book = new Book(title.value, author.value, pages.value, read.value);
-      myLibrary.addBook(book);
-      console.log(myLibrary.Books.get(title.value));
-      title.value = null;
-      author.value = null;
-      pages.value = null;
-      read.value = 'off';
-      modal.close();
-      cardContainer.innerHTML = myLibrary.render();
-    });
+    addButton.innerText = 'Add';
+    addButton.addEventListener('click', this.createBook);
     return addButton;
-  }
+  };
 
-  createCloseButton() {
+  createBook = () => {
+    try {
+      const book = new Book(
+        this.titleInput.value,
+        this.authorInput.value,
+        this.pagesInput.value,
+        this.checkBox.value
+      );
+      myLibrary.addBook(book);
+      this.titleInput.value = null;
+      this.authorInput.value = null;
+      this.pagesInput.value = null;
+      this.checkBox.value = 'off';
+      this.modal.close();
+    } catch (e) {
+      alert(e);
+    }
+  };
+
+  createCloseButton = () => {
     const closeButton = document.createElement('button');
     closeButton.setAttribute('data-close-modal', true);
     closeButton.className = 'close-modal-button';
     closeButton.innerText = 'x';
+    closeButton.addEventListener('click', () => {
+      this.modal.close();
+    });
     return closeButton;
-  }
+  };
 
-  createBookForm() {
+  createBookForm = () => {
     const addBookForm = document.createElement('div');
     addBookForm.className = 'add-book-form';
     return addBookForm;
-  }
+  };
 
-  createDialog() {
+  createDialog = () => {
     const dialog = document.createElement('dialog');
     dialog.className = 'modal';
     dialog.setAttribute('data-modal', true);
     return dialog;
-  }
+  };
 
-  createInput(placeholder, maxlength) {
+  createInput = (placeholder, maxlength) => {
     const title = document.createElement('input');
     title.className = 'input';
     title.setAttribute('type', 'text');
     title.setAttribute('placeholder', placeholder);
-    title.setAttribute('required', true);
     title.setAttribute('maxlength', maxlength);
     return title;
-  }
+  };
 
-  createCheckBox() {
+  createCheckBox = () => {
     const container = document.createElement('div');
     container.className = 'read-check-container';
     const label = document.createElement('label');
@@ -162,31 +214,16 @@ class ModalFactory {
     container.appendChild(label);
     container.appendChild(input);
     return container;
-  }
+  };
 }
 
 const myLibrary = new Library();
+const navBarFactory = new NavBarFactory();
 const modalFactory = new ModalFactory();
+const footerFactory = new FooterFactory();
 const body = document.body;
+body.appendChild(navBarFactory.createNavBar());
+body.appendChild(myLibrary.createLibrary());
 body.appendChild(modalFactory.createModal());
-const cardContainer = document.getElementById('card-container');
-
-openButton.addEventListener('click', () => {
-  modal.showModal();
-});
-
-closeButton.addEventListener('click', () => {
-  modal.close();
-});
-
-modal.addEventListener('click', (e) => {
-  const dialogDimensions = modal.getBoundingClientRect();
-  if (
-    e.clientX < dialogDimensions.left ||
-    e.clientX > dialogDimensions.right ||
-    e.clientY < dialogDimensions.top ||
-    e.clientY > dialogDimensions.bottom
-  ) {
-    modal.close();
-  }
-});
+body.appendChild(modalFactory.createNewBookButton());
+body.appendChild(footerFactory.createFooter());
