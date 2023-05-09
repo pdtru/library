@@ -15,10 +15,16 @@ class Book {
     author.innerText = this.author;
     const pages = document.createElement('p');
     pages.innerText = this.pages;
-    const read = document.createElement('input');
-    read.setAttribute('type', 'checkbox');
-    read.value = this.read;
-    bookContainer.append(title, author, pages, read);
+    const isRead = document.createElement('input');
+    isRead.setAttribute('type', 'checkbox');
+    isRead.value = this.read;
+    const readLabel = document.createElement('span');
+    if ((isRead.value = 'off')) {
+      readLabel.innerText = 'Read';
+    } else {
+      readLabel.innerText = 'Unread';
+    }
+    bookContainer.append(title, author, pages, isRead, readLabel);
     return bookContainer;
   };
 }
@@ -103,9 +109,9 @@ class ModalFactory {
     this.modal = this.createDialog();
     const bookForm = this.createBookForm();
     const closeButton = this.createCloseButton();
-    this.titleInput = this.createInput('Title', 100);
-    this.authorInput = this.createInput('Author', 100);
-    this.pagesInput = this.createInput('Pages', 10000);
+    this.titleInput = this.createInput('Title', 100, 'text');
+    this.authorInput = this.createInput('Author', 100, 'text');
+    this.pagesInput = this.createInput('Pages', 10000, 'number');
     this.checkBox = this.createCheckBox();
     const addButton = this.createAddButton();
     modalContainer.appendChild(this.modal);
@@ -164,7 +170,7 @@ class ModalFactory {
       this.titleInput.value = null;
       this.authorInput.value = null;
       this.pagesInput.value = null;
-      this.checkBox.value = 'off';
+      this.checkBox.value = false;
       this.modal.close();
     } catch (e) {
       alert(e);
@@ -195,10 +201,10 @@ class ModalFactory {
     return dialog;
   };
 
-  createInput = (placeholder, maxlength) => {
+  createInput = (placeholder, maxlength, inputType) => {
     const title = document.createElement('input');
     title.className = 'input';
-    title.setAttribute('type', 'text');
+    title.setAttribute('type', inputType);
     title.setAttribute('placeholder', placeholder);
     title.setAttribute('maxlength', maxlength);
     return title;
