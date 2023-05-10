@@ -15,15 +15,11 @@ class Book {
     author.innerText = this.author;
     const pages = document.createElement('p');
     pages.innerText = this.pages;
+    const readLabel = document.createElement('span');
+    readLabel.innerText = 'Read';
     const isRead = document.createElement('input');
     isRead.setAttribute('type', 'checkbox');
-    isRead.value = this.read;
-    const readLabel = document.createElement('span');
-    if ((isRead.value = 'off')) {
-      readLabel.innerText = 'Read';
-    } else {
-      readLabel.innerText = 'Unread';
-    }
+
     bookContainer.append(title, author, pages, isRead, readLabel);
     return bookContainer;
   };
@@ -93,14 +89,12 @@ class ModalFactory {
   titleInput;
   authorInput;
   pagesInput;
-  checkBox;
 
   constructor() {
     this.modal = null;
     this.titleInput = null;
     this.authorInput = null;
     this.pagesInput = null;
-    this.checkBox = null;
   }
 
   createModal = () => {
@@ -112,7 +106,6 @@ class ModalFactory {
     this.titleInput = this.createInput('Title', 100, 'text');
     this.authorInput = this.createInput('Author', 100, 'text');
     this.pagesInput = this.createInput('Pages', 10000, 'number');
-    this.checkBox = this.createCheckBox();
     const addButton = this.createAddButton();
     modalContainer.appendChild(this.modal);
     this.modal.appendChild(bookForm);
@@ -121,7 +114,6 @@ class ModalFactory {
       this.titleInput,
       this.authorInput,
       this.pagesInput,
-      this.checkBox,
       addButton
     );
 
@@ -163,14 +155,13 @@ class ModalFactory {
       const book = new Book(
         this.titleInput.value,
         this.authorInput.value,
-        this.pagesInput.value,
-        this.checkBox.value
+        this.pagesInput.value
       );
       myLibrary.addBook(book);
       this.titleInput.value = null;
       this.authorInput.value = null;
       this.pagesInput.value = null;
-      this.checkBox.value = false;
+
       this.modal.close();
     } catch (e) {
       alert(e);
@@ -208,18 +199,6 @@ class ModalFactory {
     title.setAttribute('placeholder', placeholder);
     title.setAttribute('maxlength', maxlength);
     return title;
-  };
-
-  createCheckBox = () => {
-    const container = document.createElement('div');
-    container.className = 'read-check-container';
-    const label = document.createElement('label');
-    label.innerText = 'Read';
-    const input = document.createElement('input');
-    input.setAttribute('type', 'checkbox');
-    container.appendChild(label);
-    container.appendChild(input);
-    return container;
   };
 }
 
