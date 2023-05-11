@@ -8,6 +8,7 @@ class Book {
 
   render = () => {
     const bookContainer = document.createElement('div');
+    bookContainer.className = 'book-container';
     bookContainer.id = this.title;
     const title = document.createElement('p');
     title.innerText = this.title;
@@ -44,6 +45,7 @@ class Library {
 
   createLibrary = () => {
     this.library = document.createElement('div');
+    this.library.className = 'library-container';
     return this.library;
   };
 
@@ -132,14 +134,17 @@ class ModalFactory {
   };
 
   createNewBookButton = () => {
+    const newBookButtonContainer = document.createElement('div');
+    newBookButtonContainer.className = 'new-book-button-container';
     const newBookButton = document.createElement('button');
+    newBookButtonContainer.appendChild(newBookButton);
     newBookButton.className = 'new-book-button';
     newBookButton.setAttribute('data-open-modal', true);
     newBookButton.innerText = '+';
     newBookButton.addEventListener('click', () => {
       this.modal.showModal();
     });
-    return newBookButton;
+    return newBookButtonContainer;
   };
 
   createAddButton = () => {
@@ -151,21 +156,17 @@ class ModalFactory {
   };
 
   createBook = () => {
-    try {
-      const book = new Book(
-        this.titleInput.value,
-        this.authorInput.value,
-        this.pagesInput.value
-      );
-      myLibrary.addBook(book);
-      this.titleInput.value = null;
-      this.authorInput.value = null;
-      this.pagesInput.value = null;
+    const book = new Book(
+      this.titleInput.value,
+      this.authorInput.value,
+      this.pagesInput.value
+    );
+    myLibrary.addBook(book);
+    this.titleInput.value = null;
+    this.authorInput.value = null;
+    this.pagesInput.value = null;
 
-      this.modal.close();
-    } catch (e) {
-      alert(e);
-    }
+    this.modal.close();
   };
 
   createCloseButton = () => {
@@ -207,6 +208,7 @@ const navBarFactory = new NavBarFactory();
 const modalFactory = new ModalFactory();
 const footerFactory = new FooterFactory();
 const body = document.body;
+
 body.appendChild(navBarFactory.createNavBar());
 body.appendChild(myLibrary.createLibrary());
 body.appendChild(modalFactory.createModal());

@@ -28,6 +28,20 @@ body {
   font-size: 42px;
 }
 
+.library-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.book-container {
+  margin: 16px;
+  background-color: #bbdefb;
+  width: 200px;
+  height: 250px;
+  border-radius: 8px;
+}
+
 /* modal */
 .modal-container {
   display: flex;
@@ -85,10 +99,13 @@ body {
 }
 
 /* fixed button */
+.new-book-button-container {
+  display: flex;
+  margin-right: 42px;
+  justify-content: flex-end;
+}
+
 .new-book-button {
-  position: absolute;
-  right: 50px;
-  bottom: 50px;
   color: white;
   background-color: #2962ff;
   width: 50px;
