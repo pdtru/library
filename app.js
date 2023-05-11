@@ -4,18 +4,35 @@ class Book {
     this.author = author;
     this.pages = pages;
     this.read = read;
+    const randomColour = Math.floor(Math.random() * this.colours.length);
+    this.colour = this.colours[randomColour];
   }
+
+  colours = [
+    '#81C784',
+    '#4FC3F7',
+    '#FFF176',
+    '#FF8A65',
+    '#9575CD',
+    '#F06292',
+    '#7986CB',
+    '#E57373',
+    '#A1887F',
+    '#FFD54F',
+    '#E0E0E0',
+  ];
 
   render = () => {
     const bookContainer = document.createElement('div');
     bookContainer.className = 'book-container';
+    bookContainer.style.backgroundColor = this.colour;
     bookContainer.id = this.title;
     const title = document.createElement('p');
-    title.innerText = this.title;
+    title.innerText = `"${this.title}"`;
     const author = document.createElement('p');
-    author.innerText = this.author;
+    author.innerText = `By: ${this.author}`;
     const pages = document.createElement('p');
-    pages.innerText = this.pages;
+    pages.innerText = `Pages: ${this.pages}`;
     const readLabel = document.createElement('span');
     readLabel.innerText = 'Read';
     const isRead = document.createElement('input');

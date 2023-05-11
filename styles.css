@@ -20,7 +20,7 @@ body {
 .nav-bar {
   background-color: #f5f5f5;
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   padding: 16px;
 }
 
@@ -35,10 +35,10 @@ body {
 }
 
 .book-container {
-  margin: 16px;
-  background-color: #bbdefb;
+  text-align: center;
+  margin: 32px;
   width: 200px;
-  height: 250px;
+  height: 225px;
   border-radius: 8px;
 }
 
