@@ -27,6 +27,15 @@ class Book {
     bookContainer.className = 'book-container';
     bookContainer.style.backgroundColor = this.colour;
     bookContainer.id = this.title;
+    const deleteBookButtonContainer = document.createElement('div');
+    deleteBookButtonContainer.className = 'delete-book-button-container';
+    const deleteBookButton = document.createElement('button');
+    deleteBookButton.addEventListener('click', () => {
+      myLibrary.removeBook(this.title);
+    });
+    deleteBookButton.className = 'delete-book-button';
+    deleteBookButton.innerText = 'x';
+    deleteBookButtonContainer.appendChild(deleteBookButton);
     const title = document.createElement('p');
     title.innerText = `"${this.title}"`;
     const author = document.createElement('p');
@@ -38,7 +47,14 @@ class Book {
     const isRead = document.createElement('input');
     isRead.setAttribute('type', 'checkbox');
 
-    bookContainer.append(title, author, pages, isRead, readLabel);
+    bookContainer.append(
+      deleteBookButtonContainer,
+      title,
+      author,
+      pages,
+      isRead,
+      readLabel
+    );
     return bookContainer;
   };
 }
@@ -182,7 +198,6 @@ class ModalFactory {
     this.titleInput.value = null;
     this.authorInput.value = null;
     this.pagesInput.value = null;
-
     this.modal.close();
   };
 
